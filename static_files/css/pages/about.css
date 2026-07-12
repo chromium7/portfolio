@@ -5,6 +5,10 @@
   gap: 5rem;
 }
 
+.about > .page--sm {
+  margin: 0 auto;
+}
+
 .journey-title {
   text-align: center;
   margin-bottom: 3rem;
