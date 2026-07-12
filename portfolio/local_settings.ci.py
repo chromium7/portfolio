@@ -1,7 +1,7 @@
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': '<PLACEHOLDER>',
+        'NAME': 'portfolio',
         'USER': 'postgres',
         'PASSWORD': 'password',
         'HOST': 'localhost',

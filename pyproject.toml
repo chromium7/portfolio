@@ -1,5 +1,5 @@
 [project]
-name = "<PLACEHOLDER>"
+name = "portfolio"
 readme = "README.md"
 
 [tool.ruff]
@@ -48,12 +48,12 @@ strict_optional = false
 [[tool.mypy.overrides]]
 module = [
   "*.migrations.*",
-  "<PLACEHOLDER>.settings"
+  "portfolio.settings"
 ]
 ignore_errors = true
 
 [tool.django-stubs]
-django_settings_module = "<PLACEHOLDER>.settings"
+django_settings_module = "portfolio.settings"
 
 [tool.isort]
 include_trailing_comma = true

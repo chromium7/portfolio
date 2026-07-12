@@ -42,7 +42,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'placeholder.urls'
+ROOT_URLCONF = 'portfolio.urls'
 
 TEMPLATES = [
     {
@@ -60,7 +60,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'placeholder.wsgi.application'
+WSGI_APPLICATION = 'portfolio.wsgi.application'
 
 
 # Database
@@ -154,11 +154,11 @@ FIXTURE_DIRS = (
 )
 TEST: bool = False
 if 'test' in sys.argv:
-    TEST_RUNNER = 'placeholder.core.db_router.UnManagedModelTestRunner'
+    TEST_RUNNER = 'portfolio.core.db_router.UnManagedModelTestRunner'
     TEST = True
 else:
     DATABASE_ROUTERS = [
-        'placeholder.core.db_router.DBRouter',
+        'portfolio.core.db_router.DBRouter',
     ]
 
 

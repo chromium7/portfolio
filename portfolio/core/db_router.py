@@ -16,7 +16,7 @@ class RoutingRule:
 class DBRouter(object):
     rules = [
         RoutingRule(
-            db_name='placeholder',
+            db_name='portfolio',
             labels={
                 # pass
             }, writable=True),
