@@ -1,0 +1,13 @@
+.prose ul {
+  margin: var(--space-3);
+  list-style: disc;
+}
+
+.prose li {
+  margin: 0.4rem 0;
+}
+
+.prose a::after {
+  opacity: 1;
+  transform: translateX(0);
+}
