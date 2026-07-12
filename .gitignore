@@ -5,8 +5,8 @@
 __pycache__/
 local_settings.py
 db.sqlite3
-media
-static
+/portfolio/media/
+/portfolio/static/
 node_modules
 .DS_Store
 

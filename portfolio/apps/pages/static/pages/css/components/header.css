@@ -1,0 +1,32 @@
+.app-header {
+  position: fixed;
+  top: 40px;
+  width: 100%;
+  z-index: 100;
+  font-size: 0.9rem;
+  letter-spacing: -0.65px;
+}
+
+.app-header__container {
+  display: flex;
+  justify-content: space-between;
+  width: 90%;
+  margin: auto;
+}
+
+.app-header__title {
+  font-size: inherit;
+  font-weight: normal;
+}
+
+.app-header__buttons {
+  display: flex;
+  align-items: center;
+  gap: var(--space-5);
+}
+
+@media (min-width: 768px) {
+  .app-header {
+    top: 65px;
+  }
+}
