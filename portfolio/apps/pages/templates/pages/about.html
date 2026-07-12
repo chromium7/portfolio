@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+
+{% block title %}About – Christofer Saputra{% endblock %}
+
+{% block content %}
+<section class="section">
+  <div class="page about">
+    <div class="page--sm prose">
+      <h1 class="page-heading">Hey there 👋</h1>
+      <p>
+        I'm Christofer Saputra, a fullstack software engineer with a strong focus on the backend side of things.
+        I spend most of my time working on system design, database architecture, performance optimization, and
+        making sure everything runs smoothly under the hood. That said, I also enjoy jumping into frontend work
+        when the opportunity comes up.
+      </p>
+      <br>
+      <p>
+        I'm passionate about building scalable systems and solving complex technical problems.
+        Whether it's designing efficient database schemas or optimizing API performance,
+        I love diving deep into the technical details.
+      </p>
+      <br>
+      <p>See <a href="{% url 'pages:projects' %}">my projects here</a>.</p>
+    </div>
+
+    <div>
+      <h1 class="journey-title page-heading">Journey</h1>
+      <div class="journey-timeline">
+        <div class="journey-timeline__line"></div>
+
+        <div class="journey-item journey-item--left">
+          <div class="journey-item__card">
+            <div class="journey-item__year">October 2019</div>
+            <div class="journey-item__content">
+              <p>Graduated with a Bachelor of Commerce from Curtin Singapore</p>
+            </div>
+          </div>
+          <div class="journey-item__node"></div>
+        </div>
+
+        <div class="journey-item journey-item--right">
+          <div class="journey-item__node"></div>
+          <div class="journey-item__card">
+            <div class="journey-item__year">January 2020</div>
+            <div class="journey-item__content">
+              <p>Started learning programming</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="journey-item journey-item--left">
+          <div class="journey-item__card">
+            <div class="journey-item__year">August 2021 – Present</div>
+            <div class="journey-item__content">
+              <p>Fullstack Software Engineer at Stamps</p>
+            </div>
+          </div>
+          <div class="journey-item__node"></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="page--sm prose">
+      <h1 class="page-heading">Contact</h1>
+      <p>
+        You can reach me at <a href="mailto:christofersaputra29@gmail.com">christofersaputra29@gmail.com</a>.
+      </p>
+    </div>
+  </div>
+</section>
+
+{% include "partials/scroll_indicator.html" %}
+{% endblock %}
