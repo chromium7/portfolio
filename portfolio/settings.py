@@ -30,6 +30,7 @@ INSTALLED_APPS = [
     'rest_framework',
 
     # Local apps
+    'portfolio.apps.users',
     'portfolio.apps.pages',
 ]
 
@@ -125,7 +126,7 @@ MEDIA_ROOT = SETTINGS_DIR / 'media'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Custom user model
-# AUTH_USER_MODEL = 'users.User'
+AUTH_USER_MODEL = 'users.User'
 
 # Redis
 REDIS_PASSWORD = ""
