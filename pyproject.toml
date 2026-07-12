@@ -52,6 +52,10 @@ module = [
 ]
 ignore_errors = true
 
+[[tool.mypy.overrides]]
+module = ["markdownx.*"]
+ignore_missing_imports = true
+
 [tool.django-stubs]
 django_settings_module = "portfolio.settings"
 

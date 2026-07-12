@@ -2,9 +2,11 @@ import pathlib
 from typing import Any
 
 from django.utils import timezone
+from django.utils.deconstruct import deconstructible
 from django.template.defaultfilters import slugify
 
 
+@deconstructible
 class FilenameGenerator:
     def __init__(self, prefix: str) -> None:
         self.prefix = prefix
@@ -14,11 +16,7 @@ class FilenameGenerator:
 
         filepath = pathlib.Path(filename)
         path = pathlib.Path(
-            self.prefix,
-            str(today.year),
-            str(today.month),
-            str(today.day),
-            slugify(filepath.stem)
+            self.prefix, str(today.year), str(today.month), str(today.day), slugify(filepath.stem)
         ).with_suffix(filepath.suffix)
 
-        return path
+        return path.as_posix()

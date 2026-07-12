@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Blog – Christofer Saputra{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'blogs/css/blog.css' %}">
+{% endblock %}
+
+{% block content %}
+<section class="section">
+  <div class="page page--sm blog-list">
+    <h1 class="page-heading">Blog</h1>
+
+    {% if posts %}
+    <div class="blog-list__items">
+      {% for post in posts %}
+      <article class="blog-card">
+        {% if post.featured_image %}
+        <a href="{{ post.get_absolute_url }}">
+          <img src="{{ post.featured_image.url }}" alt="{{ post.title }}" class="blog-card__image">
+        </a>
+        {% endif %}
+        <div class="blog-card__content">
+          <h2 class="blog-card__title">
+            <a href="{{ post.get_absolute_url }}" class="link--clear">{{ post.title }}</a>
+          </h2>
+          <div class="blog-card__meta">
+            <span>{{ post.author.get_full_name|default:post.author.email }}</span>
+            <span class="blog-card__separator"></span>
+            <time datetime="{{ post.published_at|date:'c' }}">{{ post.published_at|date:"F j, Y" }}</time>
+          </div>
+          {% if post.excerpt %}
+          <p class="blog-card__excerpt">{{ post.excerpt }}</p>
+          {% endif %}
+        </div>
+      </article>
+      {% endfor %}
+    </div>
+
+    {% if is_paginated %}
+    <nav class="blog-pagination">
+      {% if page_obj.has_previous %}
+      <a href="?page={{ page_obj.previous_page_number }}" class="link--static">&laquo; Newer</a>
+      {% endif %}
+      <span class="blog-pagination__status">Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</span>
+      {% if page_obj.has_next %}
+      <a href="?page={{ page_obj.next_page_number }}" class="link--static">Older &raquo;</a>
+      {% endif %}
+    </nav>
+    {% endif %}
+    {% else %}
+    <p>No posts yet. Check back soon.</p>
+    {% endif %}
+  </div>
+</section>
+{% endblock %}
