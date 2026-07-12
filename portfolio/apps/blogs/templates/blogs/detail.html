@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% load static %}
+{% load blog_extras %}
+
+{% block title %}{{ post.title }} – Christofer Saputra{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'blogs/css/blog.css' %}">
+{% endblock %}
+
+{% block content %}
+<section class="section">
+  <article class="page page--sm blog-detail">
+    <a href="{% url 'blogs:list' %}" class="link--clear blog-detail__back">&laquo; Back to blog</a>
+    <h1 class="page-heading">{{ post.title }}</h1>
+    <div class="blog-detail__meta">
+      <span>{{ post.author.get_full_name|default:post.author.email }}</span>
+      <span class="blog-card__separator"></span>
+      <time datetime="{{ post.published_at|date:'c' }}">{{ post.published_at|date:"F j, Y" }}</time>
+    </div>
+
+    {% if post.featured_image %}
+    <img src="{{ post.featured_image.url }}" alt="{{ post.title }}" class="blog-detail__image">
+    {% endif %}
+
+    <div class="prose blog-detail__content">
+      {{ post.content|markdownify }}
+    </div>
+  </article>
+</section>
+{% endblock %}

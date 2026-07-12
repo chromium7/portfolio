@@ -22,7 +22,9 @@ from django.urls import path, include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('markdownx/', include('markdownx.urls')),
     path('api/', include('portfolio.api.urls', namespace='api')),
+    path('blog/', include('portfolio.apps.blogs.urls', namespace='blogs')),
     path('', include('portfolio.apps.pages.urls', namespace='pages')),
 ]
 

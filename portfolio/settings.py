@@ -28,10 +28,12 @@ INSTALLED_APPS = [
     # 3rd party apps
     'django_extensions',
     'rest_framework',
+    'markdownx',
 
     # Local apps
     'portfolio.apps.users',
     'portfolio.apps.pages',
+    'portfolio.apps.blogs',
 ]
 
 MIDDLEWARE = [
@@ -116,6 +118,9 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 STATIC_ROOT = SETTINGS_DIR / 'static'
+STATICFILES_DIRS = [
+    BASE_DIR / 'static_files'
+]
 
 MEDIA_URL = 'media/'
 MEDIA_ROOT = SETTINGS_DIR / 'media'
@@ -143,6 +148,12 @@ CACHES = {
 
 # REST Framework configs
 API_AUTHENTICATION_TOKEN = ''
+
+# Markdownx (markdown editor used by the blog admin)
+MARKDOWNX_MEDIA_PATH = 'blogs/markdownx/%Y/%m/%d'
+MARKDOWNX_MARKDOWN_EXTENSIONS = ['extra', 'sane_lists']
+MARKDOWNX_UPLOAD_MAX_SIZE = 10 * 1024 * 1024
+MARKDOWNX_UPLOAD_CONTENT_TYPES = ['image/jpeg', 'image/png', 'image/gif', 'image/webp']
 
 # S3 storage
 S3_CREDENTIALS = {
