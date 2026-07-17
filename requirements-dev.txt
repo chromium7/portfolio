@@ -1,6 +1,6 @@
 django-debug-toolbar==6.2.0
 
-ruff==0.15.21
+ruff==0.15.22
 mypy==1.19.1
 isort==8.0.1
 
