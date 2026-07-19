@@ -58,7 +58,21 @@ a.link--clear::after {
   margin: var(--space-3) auto;
 }
 
+.page-heading--left {
+  text-align: left;
+  margin: var(--space-3) 0;
+}
+
 .page-subheading {
   font-family: var(--font-mono);
   text-transform: uppercase;
+}
+
+/* Mono comment-style kicker above page headings, e.g. "// about" */
+.page-kicker {
+  font-family: var(--font-mono);
+  font-size: 0.875rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--theme-secondary-color);
 }

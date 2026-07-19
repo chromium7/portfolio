@@ -19,3 +19,7 @@ class ToolsView(TemplateView):
 
 class CreditsView(TemplateView):
     template_name = "pages/credits.html"
+
+
+class RacesView(TemplateView):
+    template_name = "pages/races.html"

@@ -5,63 +5,64 @@
 {% block content %}
 <section class="section">
   <div class="page about">
-    <div class="page--sm prose">
-      <h1 class="page-heading">Hey there 👋</h1>
-      <p>
-        I'm Christofer Saputra, a fullstack software engineer with a strong focus on the backend side of things.
-        I spend most of my time working on system design, database architecture, performance optimization, and
-        making sure everything runs smoothly under the hood. That said, I also enjoy jumping into frontend work
-        when the opportunity comes up.
-      </p>
-      <br>
-      <p>
-        I'm passionate about building scalable systems and solving complex technical problems.
-        Whether it's designing efficient database schemas or optimizing API performance,
-        I love diving deep into the technical details.
-      </p>
-      <br>
-      <p>See <a href="{% url 'pages:projects' %}">my projects here</a>.</p>
+    <div class="about-intro">
+      <div class="about-intro__heading">
+        <p class="page-kicker">// about</p>
+        <h1 class="page-heading page-heading--left">Hey there 👋</h1>
+      </div>
+      <div class="about-intro__body prose">
+        <p>
+          I'm Christofer Saputra, a fullstack software engineer with a strong focus on the backend side of things.
+          I spend most of my time working on system design, database architecture, performance optimization, and
+          making sure everything runs smoothly under the hood. That said, I also enjoy jumping into frontend work
+          when the opportunity comes up.
+        </p>
+        <br>
+        <p>
+          I'm passionate about building scalable systems and solving complex technical problems.
+          Whether it's designing efficient database schemas or optimizing API performance,
+          I love diving deep into the technical details.
+        </p>
+        <br>
+        <p>See <a href="{% url 'pages:projects' %}">my projects here</a>.</p>
+      </div>
     </div>
 
-    <div>
-      <h1 class="journey-title page-heading">Journey</h1>
+    <div class="about-journey">
+      <h2 class="page-heading page-heading--left about-section-heading">Journey</h2>
       <div class="journey-timeline">
-        <div class="journey-timeline__line"></div>
-
-        <div class="journey-item journey-item--left">
-          <div class="journey-item__card">
-            <div class="journey-item__year">October 2019</div>
-            <div class="journey-item__content">
-              <p>Graduated with a Bachelor of Commerce from Curtin Singapore</p>
-            </div>
-          </div>
-          <div class="journey-item__node"></div>
+        <div class="journey-item">
+          <span class="journey-item__node"></span>
+          <div class="journey-item__date">October 2019</div>
+          <div class="journey-item__content">Graduated with a Bachelor of Commerce from Curtin Singapore</div>
         </div>
 
-        <div class="journey-item journey-item--right">
-          <div class="journey-item__node"></div>
-          <div class="journey-item__card">
-            <div class="journey-item__year">January 2020</div>
-            <div class="journey-item__content">
-              <p>Started learning programming</p>
-            </div>
-          </div>
+        <div class="journey-item">
+          <span class="journey-item__node"></span>
+          <div class="journey-item__date">January 2020</div>
+          <div class="journey-item__content">Started learning programming</div>
         </div>
 
-        <div class="journey-item journey-item--left">
-          <div class="journey-item__card">
-            <div class="journey-item__year">August 2021 – Present</div>
-            <div class="journey-item__content">
-              <p>Fullstack Software Engineer at Stamps</p>
-            </div>
-          </div>
-          <div class="journey-item__node"></div>
+        <div class="journey-item">
+          <span class="journey-item__node journey-item__node--current"></span>
+          <div class="journey-item__date">August 2021 – Present</div>
+          <div class="journey-item__content">Fullstack Software Engineer at Stamps</div>
         </div>
       </div>
     </div>
 
-    <div class="page--sm prose">
-      <h1 class="page-heading">Contact</h1>
+    <div class="about-races-card">
+      <div>
+        <p class="page-kicker">Beyond the desk</p>
+        <p class="about-races-card__text">
+          Outside of work I chase finish lines — everything from 5Ks to ultras, plus the occasional long ride.
+        </p>
+      </div>
+      <a href="{% url 'pages:races' %}" class="about-races-card__btn link--clear">Races &amp; rides →</a>
+    </div>
+
+    <div class="about-contact prose">
+      <h2 class="page-heading page-heading--left about-section-heading">Contact</h2>
       <p>
         You can reach me at <a href="mailto:christofersaputra29@gmail.com">christofersaputra29@gmail.com</a>.
       </p>
