@@ -1,0 +1,24 @@
+.credits__lead {
+  margin-top: var(--space-3);
+  color: var(--secondary-color);
+}
+
+.credits__list {
+  margin-top: var(--space-6);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  font-size: 0.95rem;
+}
+
+.credits__item a {
+  color: var(--theme-color);
+}
+
+[data-theme="dark"] .credits__item a {
+  color: var(--secondary-color);
+}
+
+.credits__desc {
+  color: var(--secondary-color);
+}

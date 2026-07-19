@@ -1,0 +1,169 @@
+.races {
+  max-width: 900px;
+  margin: 18vh auto 10vh;
+}
+
+.races__back {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--theme-secondary-color);
+  margin-bottom: var(--space-6);
+}
+
+.races__filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 2rem 0 2.75rem;
+}
+
+.race-filter {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  padding: 8px 16px;
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--theme-color);
+  background: transparent;
+  color: var(--theme-color);
+  cursor: pointer;
+  transition: background var(--transition-fast), color var(--transition-fast);
+}
+
+.race-filter:hover {
+  border-color: var(--theme-secondary-color);
+  color: var(--theme-secondary-color);
+}
+
+.race-filter--active,
+.race-filter--active:hover {
+  background: var(--theme-color);
+  border-color: var(--theme-color);
+  color: var(--light);
+}
+
+.races__feed {
+  display: flex;
+  flex-direction: column;
+  gap: 1.75rem;
+}
+
+.race-card {
+  background: var(--secondary-bg-color);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  display: grid;
+  grid-template-columns: 170px 1fr;
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.race-card:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-md);
+}
+
+.race-card__media {
+  background: repeating-linear-gradient(135deg, #e4e6c3, #e4e6c3 8px, #d8dab8 8px, #d8dab8 16px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: #4c5c6a;
+  text-align: center;
+  padding: var(--space-4);
+}
+
+.race-card__body {
+  padding: 1.6rem 1.9rem;
+}
+
+.race-card__meta {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--space-4);
+  margin-bottom: var(--space-3);
+}
+
+.race-card__badge {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  padding: 3px 10px;
+  border-radius: var(--radius-pill);
+  background: rgba(76, 92, 106, 0.14);
+  color: var(--theme-color);
+}
+
+.race-card__badge--cycling {
+  background: rgba(152, 120, 121, 0.18);
+  color: var(--theme-secondary-color);
+}
+
+[data-theme="dark"] .race-card__badge {
+  background: rgba(76, 92, 106, 0.45);
+  color: var(--light);
+}
+
+[data-theme="dark"] .race-card__badge--cycling {
+  background: rgba(152, 120, 121, 0.45);
+}
+
+.race-card__date {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--theme-secondary-color);
+}
+
+.race-card__loc {
+  font-size: 0.8rem;
+  color: var(--secondary-color);
+}
+
+.race-card__title {
+  font-size: 1.3rem;
+  letter-spacing: -0.3px;
+  margin-bottom: var(--space-2);
+}
+
+.race-card__desc {
+  font-size: 0.9rem;
+  line-height: 1.6;
+  color: var(--secondary-color);
+  margin-bottom: var(--space-4);
+}
+
+.race-card__stats {
+  display: flex;
+  align-items: center;
+  gap: var(--space-6);
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+}
+
+.race-card__result b {
+  font-family: var(--font-mono);
+}
+
+.race-card__strava {
+  font-size: 0.75rem;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--theme-color);
+}
+
+@media (max-width: 600px) {
+  .race-card {
+    grid-template-columns: 1fr;
+  }
+
+  .race-card__media {
+    min-height: 110px;
+  }
+}

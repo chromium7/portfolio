@@ -2,6 +2,20 @@
   display: none;
 }
 
+.tag {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  padding: 4px 12px;
+  border: 1px solid rgba(76, 92, 106, 0.4);
+  border-radius: var(--radius-pill);
+  color: var(--theme-color);
+}
+
+[data-theme="dark"] .tag {
+  border-color: rgba(242, 244, 241, 0.35);
+  color: var(--secondary-color);
+}
+
 .sr-only {
   position: absolute;
   width: 1px;

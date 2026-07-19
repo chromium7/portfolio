@@ -25,6 +25,22 @@
   gap: var(--space-5);
 }
 
+.app-header__link {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+}
+
+.app-header__link--active {
+  color: var(--theme-color);
+}
+
+.app-header__link--active::after {
+  opacity: 1;
+  transform: translateX(0);
+}
+
 @media (min-width: 768px) {
   .app-header {
     top: 65px;
