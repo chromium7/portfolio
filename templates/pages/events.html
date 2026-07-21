@@ -11,117 +11,52 @@
 
     <div class="races__filters" role="group" aria-label="Filter events by type">
       <button type="button" class="race-filter race-filter--active" data-filter="all">All</button>
-      <button type="button" class="race-filter" data-filter="5K">5K</button>
-      <button type="button" class="race-filter" data-filter="10K">10K</button>
-      <button type="button" class="race-filter" data-filter="HM">HM</button>
-      <button type="button" class="race-filter" data-filter="FM">FM</button>
-      <button type="button" class="race-filter" data-filter="Ultra">Ultra</button>
-      <button type="button" class="race-filter" data-filter="Cycling">Cycling</button>
+      {% for category in categories %}
+        <button type="button" class="race-filter" data-filter="{{ category }}">{{ category }}</button>
+      {% endfor %}
     </div>
 
-    {# Placeholder events until races come from the database #}
     <div class="races__feed">
-      <div class="race-card" data-type="Ultra">
-        <div class="race-card__media">medal photo</div>
-        <div class="race-card__body">
-          <div class="race-card__meta">
-            <span class="race-card__badge">Ultra</span>
-            <span class="race-card__date">May 2026</span>
-            <span class="race-card__loc">Sentul, ID</span>
+      {% for event in events %}
+        <div class="race-card" data-type="{{ event.category.name }}">
+          <div class="race-card__media">
+            {% with cover=event.photos.first %}
+              {% if cover %}
+                <img src="{{ cover.image.url }}" alt="{{ cover.caption|default:event.name }}">
+              {% else %}
+                medal photo
+              {% endif %}
+            {% endwith %}
           </div>
-          <h3 class="race-card__title">Sundown Ultra 50K</h3>
-          <p class="race-card__desc">First ultra distance. Trail loops through the hills, brutal final climb — finished with plenty left in the legs.</p>
-          <div class="race-card__stats">
-            <span class="race-card__result"><b>6:12:45</b> · 7'27" /km</span>
-            <a href="https://www.strava.com" target="_blank" rel="noopener" class="race-card__strava link--clear">Strava ↗</a>
-          </div>
-        </div>
-      </div>
-
-      <div class="race-card" data-type="HM">
-        <div class="race-card__media">medal photo</div>
-        <div class="race-card__body">
-          <div class="race-card__meta">
-            <span class="race-card__badge">HM</span>
-            <span class="race-card__date">Mar 2026</span>
-            <span class="race-card__loc">Jakarta, ID</span>
-          </div>
-          <h3 class="race-card__title">City Half Marathon</h3>
-          <p class="race-card__desc">Negative split the second half. Cool morning, fast flat course through the city center.</p>
-          <div class="race-card__stats">
-            <span class="race-card__result"><b>1:52:10</b> · 5'19" /km</span>
-            <a href="https://www.strava.com" target="_blank" rel="noopener" class="race-card__strava link--clear">Strava ↗</a>
-          </div>
-        </div>
-      </div>
-
-      <div class="race-card" data-type="Cycling">
-        <div class="race-card__media">medal photo</div>
-        <div class="race-card__body">
-          <div class="race-card__meta">
-            <span class="race-card__badge race-card__badge--cycling">Cycling</span>
-            <span class="race-card__date">Nov 2025</span>
-            <span class="race-card__loc">Bandung, ID</span>
-          </div>
-          <h3 class="race-card__title">Gran Fondo 120K</h3>
-          <p class="race-card__desc">Long ride with 1,400m of climbing. Descents in the rain made it interesting.</p>
-          <div class="race-card__stats">
-            <span class="race-card__result"><b>4:05:22</b> · 29.3 km/h</span>
-            <a href="https://www.strava.com" target="_blank" rel="noopener" class="race-card__strava link--clear">Strava ↗</a>
+          <div class="race-card__body">
+            <div class="race-card__meta">
+              <span class="race-card__badge{% if event.category.group == 'cycling' %} race-card__badge--cycling{% endif %}">{{ event.category.name }}</span>
+              <span class="race-card__date">{{ event.date|date:"M Y" }}</span>
+              {% if event.location %}
+                <span class="race-card__loc">{{ event.location }}</span>
+              {% endif %}
+            </div>
+            <h3 class="race-card__title">{{ event.name }}</h3>
+            {% if event.notes %}
+              <p class="race-card__desc">{{ event.notes }}</p>
+            {% endif %}
+            <div class="race-card__stats">
+              {% if event.finish_time %}
+                <span class="race-card__result"><b>{{ event.finish_time }}</b>{% if event.pace_per_km %} · {{ event.pace_per_km }} /km{% endif %}</span>
+              {% elif event.score %}
+                <span class="race-card__result"><b>{{ event.score }}</b></span>
+              {% elif event.overall_position %}
+                <span class="race-card__result"><b>#{{ event.overall_position }}</b></span>
+              {% endif %}
+              {% if event.official_result_url %}
+                <a href="{{ event.official_result_url }}" target="_blank" rel="noopener" class="race-card__strava link--clear">Results ↗</a>
+              {% endif %}
+            </div>
           </div>
         </div>
-      </div>
-
-      <div class="race-card" data-type="FM">
-        <div class="race-card__media">medal photo</div>
-        <div class="race-card__body">
-          <div class="race-card__meta">
-            <span class="race-card__badge">FM</span>
-            <span class="race-card__date">Oct 2025</span>
-            <span class="race-card__loc">Jakarta, ID</span>
-          </div>
-          <h3 class="race-card__title">Jakarta Marathon</h3>
-          <p class="race-card__desc">First full marathon. Hit the wall at 32K, walked a water station, finished strong anyway.</p>
-          <div class="race-card__stats">
-            <span class="race-card__result"><b>4:21:33</b> · 6'12" /km</span>
-            <a href="https://www.strava.com" target="_blank" rel="noopener" class="race-card__strava link--clear">Strava ↗</a>
-          </div>
-        </div>
-      </div>
-
-      <div class="race-card" data-type="10K">
-        <div class="race-card__media">medal photo</div>
-        <div class="race-card__body">
-          <div class="race-card__meta">
-            <span class="race-card__badge">10K</span>
-            <span class="race-card__date">Jul 2025</span>
-            <span class="race-card__loc">Singapore</span>
-          </div>
-          <h3 class="race-card__title">Independence Day 10K</h3>
-          <p class="race-card__desc">Humid evening race around the bay. Great crowd support the whole way.</p>
-          <div class="race-card__stats">
-            <span class="race-card__result"><b>52:41</b> · 5'16" /km</span>
-            <a href="https://www.strava.com" target="_blank" rel="noopener" class="race-card__strava link--clear">Strava ↗</a>
-          </div>
-        </div>
-      </div>
-
-      <div class="race-card" data-type="5K">
-        <div class="race-card__media">medal photo</div>
-        <div class="race-card__body">
-          <div class="race-card__meta">
-            <span class="race-card__badge">5K</span>
-            <span class="race-card__date">Apr 2025</span>
-            <span class="race-card__loc">Jakarta, ID</span>
-          </div>
-          <h3 class="race-card__title">Charity Fun Run 5K</h3>
-          <p class="race-card__desc">Short and sharp — paced a friend to their first sub-25.</p>
-          <div class="race-card__stats">
-            <span class="race-card__result"><b>24:58</b> · 5'00" /km</span>
-            <a href="https://www.strava.com" target="_blank" rel="noopener" class="race-card__strava link--clear">Strava ↗</a>
-          </div>
-        </div>
-      </div>
+      {% empty %}
+        <p>No events yet. Check back soon!</p>
+      {% endfor %}
     </div>
   </div>
 </section>

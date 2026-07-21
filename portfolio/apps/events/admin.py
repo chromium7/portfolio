@@ -27,7 +27,19 @@ class EventAdmin(admin.ModelAdmin):
     inlines = [EventPhotoInline]
     fieldsets = (
         (None, {"fields": ("name", "category", "date", "location", "result_type")}),
-        ("Result", {"fields": ("distance_km", "finish_time", "pace_per_km", "score", "overall_position", "category_position")}),
+        (
+            "Result",
+            {
+                "fields": (
+                    "distance_km",
+                    "finish_time",
+                    "pace_per_km",
+                    "score",
+                    "overall_position",
+                    "category_position",
+                )
+            },
+        ),
         ("Details", {"fields": ("bib_number", "official_result_url", "notes")}),
         ("Timestamps", {"fields": ("created_at", "updated_at")}),
     )
