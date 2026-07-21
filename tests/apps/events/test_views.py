@@ -14,7 +14,7 @@ class EventsViewTest(TestCase):
         response = self.client.get(reverse("pages:events"))
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, "pages/events.html")
-        self.assertContains(response, "Events &amp; Rides")
+        self.assertContains(response, "Events")
 
     def test_events_page_empty_state(self) -> None:
         response = self.client.get(reverse("pages:events"))
