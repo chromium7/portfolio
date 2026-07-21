@@ -21,5 +21,5 @@ class CreditsView(TemplateView):
     template_name = "pages/credits.html"
 
 
-class RacesView(TemplateView):
-    template_name = "pages/races.html"
+class EventsView(TemplateView):
+    template_name = "pages/events.html"
