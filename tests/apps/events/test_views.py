@@ -42,6 +42,18 @@ class EventsViewTest(TestCase):
         self.assertContains(response, 'data-filter="Marathon"')
         self.assertContains(response, 'data-filter="Ultra"')
 
+    def test_events_page_with_urls(self) -> None:
+        Event.objects.create(
+            name="Strava Event",
+            category=self.category,
+            date=date(2025, 1, 1),
+            strava_url="https://www.strava.com/activities/123",
+            official_result_url="https://results.example.com/456",
+        )
+        response = self.client.get(reverse("pages:events"))
+        self.assertContains(response, "Strava ↗")
+        self.assertContains(response, "Results ↗")
+
     def test_events_page_ordering(self) -> None:
         Event.objects.create(name="Older", category=self.category, date=date(2024, 1, 1))
         Event.objects.create(name="Newer", category=self.category, date=date(2025, 12, 31))

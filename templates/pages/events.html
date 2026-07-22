@@ -48,6 +48,9 @@
               {% elif event.overall_position %}
                 <span class="race-card__result"><b>#{{ event.overall_position }}</b></span>
               {% endif %}
+              {% if event.strava_url %}
+                <a href="{{ event.strava_url }}" target="_blank" rel="noopener" class="race-card__strava link--clear">Strava ↗</a>
+              {% endif %}
               {% if event.official_result_url %}
                 <a href="{{ event.official_result_url }}" target="_blank" rel="noopener" class="race-card__strava link--clear">Results ↗</a>
               {% endif %}

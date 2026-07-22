@@ -11,7 +11,7 @@ class EventPhotoInline(admin.TabularInline):
 
 @admin.register(EventCategory)
 class EventCategoryAdmin(admin.ModelAdmin):
-    list_display = ("name", "group", "typical_distance_km")
+    list_display = ("name", "group")
     list_filter = ("group",)
     search_fields = ("name", "description")
     prepopulated_fields = {"slug": ("name",)}
@@ -27,20 +27,8 @@ class EventAdmin(admin.ModelAdmin):
     inlines = [EventPhotoInline]
     fieldsets = (
         (None, {"fields": ("name", "category", "date", "location", "result_type")}),
-        (
-            "Result",
-            {
-                "fields": (
-                    "distance_km",
-                    "finish_time",
-                    "pace_per_km",
-                    "score",
-                    "overall_position",
-                    "category_position",
-                )
-            },
-        ),
-        ("Details", {"fields": ("bib_number", "official_result_url", "notes")}),
+        ("Result", {"fields": ("distance_km", "finish_time", "score", "overall_position", "category_position")}),
+        ("Details", {"fields": ("bib_number", "strava_url", "official_result_url", "notes")}),
         ("Timestamps", {"fields": ("created_at", "updated_at")}),
     )
 

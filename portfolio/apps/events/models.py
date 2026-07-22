@@ -13,19 +13,11 @@ class EventCategory(models.Model):
         RUNNING = "running", "Running"
         CYCLING = "cycling", "Cycling"
         TRIATHLON = "triathlon", "Triathlon"
-        RACKET = "racket", "Racket Sport"
         OTHER = "other", "Other"
 
     name = models.CharField(max_length=100, unique=True)
     slug = models.SlugField(unique=True, blank=True)
     group = models.CharField(max_length=20, choices=Group.choices, default=Group.OTHER)
-    typical_distance_km = models.DecimalField(
-        max_digits=6,
-        decimal_places=2,
-        null=True,
-        blank=True,
-        help_text="Nominal distance if fixed, e.g. 42.195 for Marathon. Blank for non-distance events.",
-    )
     description = models.TextField(blank=True)
 
     class Meta:
@@ -55,13 +47,13 @@ class Event(models.Model):
 
     distance_km = models.DecimalField(max_digits=6, decimal_places=2, null=True, blank=True)
     finish_time = models.DurationField(null=True, blank=True)
-    pace_per_km = models.DurationField(null=True, blank=True, help_text="Optional, can be computed")
 
     overall_position = models.PositiveIntegerField(null=True, blank=True)
     category_position = models.PositiveIntegerField(null=True, blank=True)
     score = models.CharField(max_length=100, blank=True)
 
     bib_number = models.CharField(max_length=20, blank=True)
+    strava_url = models.URLField(blank=True)
     official_result_url = models.URLField(blank=True)
     notes = models.TextField(blank=True)
 
@@ -71,6 +63,12 @@ class Event(models.Model):
     class Meta:
         ordering = ["-date"]
         indexes = [models.Index(fields=["-date"]), models.Index(fields=["category"])]
+
+    @property
+    def pace_per_km(self) -> "datetime.timedelta | None":
+        if self.finish_time and self.distance_km and self.distance_km > 0:
+            return self.finish_time / float(self.distance_km)
+        return None
 
     def __str__(self) -> str:
         return f"{self.name} ({self.date.year})"
