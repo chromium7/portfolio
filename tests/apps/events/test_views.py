@@ -50,7 +50,7 @@ class EventsViewTest(TestCase):
             strava_url="https://www.strava.com/activities/123",
             official_result_url="https://results.example.com/456",
         )
-        response = self.client.get(reverse("pages:event_detail", kwargs={"pk": event.pk}))
+        response = self.client.get(reverse("pages:event_detail", kwargs={"slug": event.slug}))
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, "pages/event_detail.html")
         self.assertContains(response, "View on Strava ↗")

@@ -47,6 +47,8 @@ class EventDetailView(DetailView):
     model = Event
     template_name = "pages/event_detail.html"
     context_object_name = "event"
+    slug_field = "slug"
+    slug_url_kwarg = "slug"
 
     def get_queryset(self) -> QuerySet[Event]:
         return super().get_queryset().select_related("category").prefetch_related("photos")

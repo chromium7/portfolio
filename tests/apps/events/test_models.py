@@ -124,3 +124,17 @@ class EventModelTest(TestCase):
             finish_time=timedelta(minutes=30),
         )
         self.assertIsNone(event.pace_per_km)
+
+    def test_auto_slug_on_save(self) -> None:
+        event = Event.objects.create(name="Jakarta Marathon", category=self.category, date=date(2025, 10, 26))
+        self.assertEqual(event.slug, "jakarta-marathon")
+
+    def test_auto_slug_disambiguation(self) -> None:
+        event1 = Event.objects.create(name="Fun Run", category=self.category, date=date(2025, 1, 1))
+        event2 = Event.objects.create(name="Fun Run", category=self.category, date=date(2025, 1, 2))
+        self.assertEqual(event1.slug, "fun-run")
+        self.assertEqual(event2.slug, "fun-run-1")
+
+    def test_get_absolute_url(self) -> None:
+        event = Event.objects.create(name="Jakarta Marathon", category=self.category, date=date(2025, 10, 26))
+        self.assertEqual(event.get_absolute_url(), "/events/jakarta-marathon/")

@@ -18,7 +18,7 @@
 
     <div class="races__feed">
       {% for event in events %}
-        <a href="{% url 'pages:event_detail' event.pk %}" class="race-card link--clear" data-type="{{ event.category.name }}">
+        <a href="{% url 'pages:event_detail' event.slug %}" class="race-card link--clear" data-type="{{ event.category.name }}">
           <div class="race-card__media">
             {% with cover=event.photos.first %}
               {% if cover %}
