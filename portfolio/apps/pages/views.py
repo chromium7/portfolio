@@ -1,7 +1,7 @@
 from typing import Any
 
 from django.db.models import QuerySet
-from django.views.generic import ListView, TemplateView
+from django.views.generic import DetailView, ListView, TemplateView
 
 from portfolio.apps.events.models import Event
 
@@ -41,3 +41,12 @@ class EventsView(ListView):
         categories = Event.objects.values_list("category__name", flat=True).distinct()
         context["categories"] = sorted(categories)
         return context
+
+
+class EventDetailView(DetailView):
+    model = Event
+    template_name = "pages/event_detail.html"
+    context_object_name = "event"
+
+    def get_queryset(self) -> QuerySet[Event]:
+        return super().get_queryset().select_related("category").prefetch_related("photos")

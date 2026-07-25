@@ -18,7 +18,7 @@
 
     <div class="races__feed">
       {% for event in events %}
-        <div class="race-card" data-type="{{ event.category.name }}">
+        <a href="{% url 'pages:event_detail' event.pk %}" class="race-card link--clear" data-type="{{ event.category.name }}">
           <div class="race-card__media">
             {% with cover=event.photos.first %}
               {% if cover %}
@@ -38,7 +38,7 @@
             </div>
             <h3 class="race-card__title">{{ event.name }}</h3>
             {% if event.notes %}
-              <p class="race-card__desc">{{ event.notes }}</p>
+              <p class="race-card__desc">{{ event.notes|truncatechars:100 }}</p>
             {% endif %}
             <div class="race-card__stats">
               {% if event.finish_time %}
@@ -48,15 +48,9 @@
               {% elif event.overall_position %}
                 <span class="race-card__result"><b>#{{ event.overall_position }}</b></span>
               {% endif %}
-              {% if event.strava_url %}
-                <a href="{{ event.strava_url }}" target="_blank" rel="noopener" class="race-card__strava link--clear">Strava ↗</a>
-              {% endif %}
-              {% if event.official_result_url %}
-                <a href="{{ event.official_result_url }}" target="_blank" rel="noopener" class="race-card__strava link--clear">Results ↗</a>
-              {% endif %}
             </div>
           </div>
-        </div>
+        </a>
       {% empty %}
         <p>No events yet. Check back soon!</p>
       {% endfor %}
