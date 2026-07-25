@@ -158,6 +158,20 @@
   color: var(--theme-color);
 }
 
+.races__pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-4);
+  margin-top: var(--space-8);
+}
+
+.races__pagination-current {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--secondary-color);
+}
+
 @media (max-width: 600px) {
   .race-card {
     grid-template-columns: 1fr;

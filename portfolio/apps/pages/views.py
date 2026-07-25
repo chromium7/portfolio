@@ -31,13 +31,13 @@ class EventsView(ListView):
     template_name = "pages/events.html"
     context_object_name = "events"
     ordering = ["-date"]
+    paginate_by = 6
 
     def get_queryset(self) -> QuerySet[Event]:
         return super().get_queryset().select_related("category").prefetch_related("photos")
 
     def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
         context = super().get_context_data(**kwargs)
-        events: QuerySet[Event] = context["events"]
-        categories = events.values_list("category__name", flat=True).distinct()
+        categories = Event.objects.values_list("category__name", flat=True).distinct()
         context["categories"] = sorted(categories)
         return context

@@ -54,6 +54,33 @@ class EventsViewTest(TestCase):
         self.assertContains(response, "Strava ↗")
         self.assertContains(response, "Results ↗")
 
+    def test_events_page_pagination(self) -> None:
+        for i in range(7):
+            Event.objects.create(
+                name=f"Event {i}",
+                category=self.category,
+                date=date(2025, 1, i + 1),
+            )
+        response = self.client.get(reverse("pages:events"))
+        self.assertContains(response, "Page 1 of 2")
+        self.assertContains(response, "Next")
+
+        response_page2 = self.client.get(reverse("pages:events") + "?page=2")
+        self.assertContains(response_page2, "Prev")
+        self.assertNotContains(response_page2, "Next")
+
+    def test_events_page_categories_unaffected_by_pagination(self) -> None:
+        cat_ultra = EventCategory.objects.create(name="Ultra", group=EventCategory.Group.RUNNING)
+        for i in range(10):
+            Event.objects.create(
+                name=f"Event {i}",
+                category=self.category if i < 5 else cat_ultra,
+                date=date(2025, 1, i + 1),
+            )
+        response = self.client.get(reverse("pages:events") + "?page=2")
+        self.assertContains(response, 'data-filter="Marathon"')
+        self.assertContains(response, 'data-filter="Ultra"')
+
     def test_events_page_ordering(self) -> None:
         Event.objects.create(name="Older", category=self.category, date=date(2024, 1, 1))
         Event.objects.create(name="Newer", category=self.category, date=date(2025, 12, 31))

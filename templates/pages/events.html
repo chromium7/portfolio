@@ -61,6 +61,18 @@
         <p>No events yet. Check back soon!</p>
       {% endfor %}
     </div>
+
+    {% if is_paginated %}
+      <nav class="races__pagination" aria-label="Event pages">
+        {% if page_obj.has_previous %}
+          <a href="?page={{ page_obj.previous_page_number }}" class="race-filter">Prev</a>
+        {% endif %}
+        <span class="races__pagination-current">Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</span>
+        {% if page_obj.has_next %}
+          <a href="?page={{ page_obj.next_page_number }}" class="race-filter">Next</a>
+        {% endif %}
+      </nav>
+    {% endif %}
   </div>
 </section>
 {% endblock %}
