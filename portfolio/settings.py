@@ -33,6 +33,7 @@ INSTALLED_APPS = [
     # Local apps
     'portfolio.apps.users',
     'portfolio.apps.pages',
+    'portfolio.apps.events',
     'portfolio.apps.blogs',
 ]
 
