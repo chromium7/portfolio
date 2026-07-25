@@ -1,6 +1,7 @@
 from typing import Any
 
 from django.db import models
+from django.urls import reverse
 from django.utils.text import slugify
 
 
@@ -40,6 +41,7 @@ class Event(models.Model):
         PLACEMENT = "placement", "Placement only"
 
     name = models.CharField(max_length=200)
+    slug = models.SlugField(unique=True, blank=True)
     category = models.ForeignKey(EventCategory, on_delete=models.PROTECT, related_name="events")
     date = models.DateField()
     location = models.CharField(max_length=200, blank=True)
@@ -63,6 +65,20 @@ class Event(models.Model):
     class Meta:
         ordering = ["-date"]
         indexes = [models.Index(fields=["-date"]), models.Index(fields=["category"])]
+
+    def save(self, *args: Any, **kwargs: Any) -> None:
+        if not self.slug:
+            base_slug = slugify(self.name)
+            slug = base_slug
+            counter = 1
+            while Event.objects.filter(slug=slug).exclude(pk=self.pk).exists():
+                slug = f"{base_slug}-{counter}"
+                counter += 1
+            self.slug = slug
+        super().save(*args, **kwargs)
+
+    def get_absolute_url(self) -> str:
+        return reverse("pages:event_detail", kwargs={"slug": self.slug})
 
     @property
     def pace_per_km(self) -> "datetime.timedelta | None":

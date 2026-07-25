@@ -1,0 +1,137 @@
+{% extends "base.html" %}
+
+{% block title %}{{ event.name }} – Christofer Saputra{% endblock %}
+
+{% block content %}
+<section class="section">
+  <div class="page event-detail">
+    <a href="{% url 'pages:events' %}" class="event-detail__back link--clear">← Back to Events</a>
+
+    {% with photos=event.photos.all %}
+      {% if photos %}
+        <div class="event-detail__carousel" aria-label="Event photos">
+          <div class="event-detail__carousel-track">
+            {% for photo in photos %}
+              <div class="event-detail__carousel-slide">
+                <img src="{{ photo.image.url }}" alt="{{ photo.caption|default:event.name }}">
+                {% if photo.caption %}
+                  <p class="event-detail__carousel-caption">{{ photo.caption }}</p>
+                {% endif %}
+              </div>
+            {% endfor %}
+          </div>
+          {% if photos|length > 1 %}
+            <button type="button" class="event-detail__carousel-btn event-detail__carousel-btn--prev" aria-label="Previous photo">‹</button>
+            <button type="button" class="event-detail__carousel-btn event-detail__carousel-btn--next" aria-label="Next photo">›</button>
+            <div class="event-detail__carousel-dots">
+              {% for photo in photos %}
+                <button type="button" class="event-detail__carousel-dot{% if forloop.first %} event-detail__carousel-dot--active{% endif %}" data-index="{{ forloop.counter0 }}" aria-label="Go to photo {{ forloop.counter }}"></button>
+              {% endfor %}
+            </div>
+          {% endif %}
+        </div>
+      {% else %}
+        <div class="event-detail__hero event-detail__hero--placeholder">No photos available.</div>
+      {% endif %}
+    {% endwith %}
+
+    <div class="event-detail__info">
+      <p class="page-kicker">{{ event.category.group|title }} — {{ event.category.name }}</p>
+      <h1 class="page-heading page-heading--left">{{ event.name }}</h1>
+
+      <div class="event-detail__meta">
+        <span class="event-detail__date">{{ event.date|date:"F j, Y" }}</span>
+        {% if event.location %}
+          <span class="event-detail__loc">{{ event.location }}</span>
+        {% endif %}
+      </div>
+
+      {% if event.distance_km %}
+        <p class="event-detail__distance">Distance: <strong>{{ event.distance_km|floatformat }} km</strong></p>
+      {% endif %}
+
+      <div class="event-detail__results">
+        {% if event.finish_time %}
+          <div class="event-detail__result-row">
+            <span class="event-detail__result-label">Finish Time</span>
+            <span class="event-detail__result-value">{{ event.finish_time }}{% if event.pace_per_km %} <small>({{ event.pace_per_km }} /km)</small>{% endif %}</span>
+          </div>
+        {% endif %}
+        {% if event.score %}
+          <div class="event-detail__result-row">
+            <span class="event-detail__result-label">Score</span>
+            <span class="event-detail__result-value">{{ event.score }}</span>
+          </div>
+        {% endif %}
+        {% if event.overall_position %}
+          <div class="event-detail__result-row">
+            <span class="event-detail__result-label">Overall Position</span>
+            <span class="event-detail__result-value">#{{ event.overall_position }}</span>
+          </div>
+        {% endif %}
+        {% if event.category_position %}
+          <div class="event-detail__result-row">
+            <span class="event-detail__result-label">Category Position</span>
+            <span class="event-detail__result-value">#{{ event.category_position }}</span>
+          </div>
+        {% endif %}
+        {% if event.bib_number %}
+          <div class="event-detail__result-row">
+            <span class="event-detail__result-label">Bib Number</span>
+            <span class="event-detail__result-value">{{ event.bib_number }}</span>
+          </div>
+        {% endif %}
+      </div>
+
+      {% if event.notes %}
+        <div class="event-detail__notes">
+          <p>{{ event.notes }}</p>
+        </div>
+      {% endif %}
+
+      {% if event.strava_url or event.official_result_url %}
+        <div class="event-detail__links">
+          {% if event.strava_url %}
+            <a href="{{ event.strava_url }}" target="_blank" rel="noopener" class="event-detail__link">View on Strava ↗</a>
+          {% endif %}
+          {% if event.official_result_url %}
+            <a href="{{ event.official_result_url }}" target="_blank" rel="noopener" class="event-detail__link">Official Results ↗</a>
+          {% endif %}
+        </div>
+      {% endif %}
+    </div>
+  </div>
+</section>
+{% endblock %}
+
+{% block extra_js %}
+{% with photos=event.photos.all %}
+  {% if photos|length > 1 %}
+<script>
+  (function () {
+    var track = document.querySelector('.event-detail__carousel-track');
+    var slides = document.querySelectorAll('.event-detail__carousel-slide');
+    var prevBtn = document.querySelector('.event-detail__carousel-btn--prev');
+    var nextBtn = document.querySelector('.event-detail__carousel-btn--next');
+    var dots = document.querySelectorAll('.event-detail__carousel-dot');
+    var current = 0;
+    var total = {{ photos|length }};
+
+    function goTo(index) {
+      current = ((index % total) + total) % total;
+      track.style.transform = 'translateX(-' + (current * 100) + '%)';
+      dots.forEach(function (dot, i) {
+        dot.classList.toggle('event-detail__carousel-dot--active', i === current);
+      });
+    }
+
+    prevBtn.addEventListener('click', function () { goTo(current - 1); });
+    nextBtn.addEventListener('click', function () { goTo(current + 1); });
+    dots.forEach(function (dot) {
+      dot.addEventListener('click', function () { goTo(parseInt(dot.dataset.index)); });
+    });
+  })();
+</script>
+  {% endif %}
+{% endwith %}
+{% endblock %}

@@ -1,5 +1,5 @@
 .races {
-  max-width: 900px;
+  max-width: 1140px;
   margin: 18vh auto 10vh;
 }
 
@@ -45,20 +45,25 @@
   color: var(--light);
 }
 
+/* ---------- feed grid ---------- */
+
 .races__feed {
-  display: flex;
-  flex-direction: column;
-  gap: 1.75rem;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.5rem;
 }
+
+/* ---------- race card ---------- */
 
 .race-card {
   background: var(--secondary-bg-color);
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-sm);
-  display: grid;
-  grid-template-columns: 170px 1fr;
+  display: flex;
+  flex-direction: column;
   overflow: hidden;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
+  color: inherit;
 }
 
 .race-card:hover {
@@ -75,11 +80,22 @@
   font-size: 0.7rem;
   color: #4c5c6a;
   text-align: center;
-  padding: var(--space-4);
+  height: 180px;
+  overflow: hidden;
+}
+
+.race-card__media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
 }
 
 .race-card__body {
-  padding: 1.6rem 1.9rem;
+  padding: 1.25rem 1.4rem;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
 }
 
 .race-card__meta {
@@ -127,16 +143,16 @@
 }
 
 .race-card__title {
-  font-size: 1.3rem;
+  font-size: 1.15rem;
   letter-spacing: -0.3px;
   margin-bottom: var(--space-2);
 }
 
 .race-card__desc {
-  font-size: 0.9rem;
+  font-size: 0.875rem;
   line-height: 1.6;
   color: var(--secondary-color);
-  margin-bottom: var(--space-4);
+  margin-bottom: auto;
 }
 
 .race-card__stats {
@@ -145,18 +161,14 @@
   gap: var(--space-6);
   font-family: var(--font-mono);
   font-size: 0.85rem;
+  margin-top: var(--space-3);
 }
 
 .race-card__result b {
   font-family: var(--font-mono);
 }
 
-.race-card__strava {
-  font-size: 0.75rem;
-  letter-spacing: 1px;
-  text-transform: uppercase;
-  color: var(--theme-color);
-}
+/* ---------- pagination ---------- */
 
 .races__pagination {
   display: flex;
@@ -172,12 +184,254 @@
   color: var(--secondary-color);
 }
 
-@media (max-width: 600px) {
-  .race-card {
+/* ========== event detail ========== */
+
+.event-detail {
+  max-width: 780px;
+  margin: 18vh auto 10vh;
+}
+
+.event-detail__back {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--theme-secondary-color);
+  margin-bottom: var(--space-6);
+}
+
+/* ---------- carousel ---------- */
+
+.event-detail__carousel {
+  position: relative;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  margin-bottom: 2.5rem;
+  background: var(--secondary-bg-color);
+}
+
+.event-detail__carousel-track {
+  display: flex;
+  transition: transform 0.4s ease;
+}
+
+.event-detail__carousel-slide {
+  flex: 0 0 100%;
+  min-width: 0;
+}
+
+.event-detail__carousel-slide img {
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  object-fit: cover;
+  display: block;
+}
+
+.event-detail__carousel-caption {
+  padding: 0.75rem 1.25rem;
+  font-size: 0.85rem;
+  color: var(--secondary-color);
+  font-style: italic;
+}
+
+.event-detail__carousel-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(0, 0, 0, 0.45);
+  color: #fff;
+  font-size: 1.5rem;
+  line-height: 1;
+  cursor: pointer;
+  transition: background var(--transition-fast);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+}
+
+.event-detail__carousel-btn:hover {
+  background: rgba(0, 0, 0, 0.65);
+}
+
+.event-detail__carousel-btn--prev {
+  left: 12px;
+}
+
+.event-detail__carousel-btn--next {
+  right: 12px;
+}
+
+.event-detail__carousel-dots {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+.event-detail__carousel-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(255, 255, 255, 0.5);
+  cursor: pointer;
+  padding: 0;
+  transition: background var(--transition-fast);
+}
+
+.event-detail__carousel-dot:hover {
+  background: rgba(255, 255, 255, 0.8);
+}
+
+.event-detail__carousel-dot--active {
+  background: #fff;
+}
+
+/* ---------- hero placeholder ---------- */
+
+.event-detail__hero--placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 240px;
+  background: repeating-linear-gradient(135deg, #e4e6c3, #e4e6c3 8px, #d8dab8 8px, #d8dab8 16px);
+  border-radius: var(--radius-lg);
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  color: #4c5c6a;
+  margin-bottom: 2.5rem;
+}
+
+/* ---------- info section ---------- */
+
+.event-detail__info {
+  margin-top: 2rem;
+}
+
+.event-detail__meta {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--space-5);
+  margin-bottom: var(--space-5);
+  font-family: var(--font-mono);
+  font-size: 0.9rem;
+}
+
+.event-detail__date {
+  color: var(--theme-color);
+}
+
+.event-detail__loc {
+  color: var(--secondary-color);
+}
+
+.event-detail__distance {
+  font-size: 0.95rem;
+  color: var(--secondary-color);
+  margin-bottom: var(--space-5);
+}
+
+.event-detail__results {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  margin-bottom: var(--space-6);
+  padding: 1.25rem 1.5rem;
+  background: var(--secondary-bg-color);
+  border-radius: var(--radius-lg);
+}
+
+.event-detail__result-row {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-4);
+}
+
+.event-detail__result-label {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--theme-color);
+  min-width: 140px;
+}
+
+.event-detail__result-value {
+  font-family: var(--font-mono);
+  font-size: 1rem;
+  color: var(--primary-color);
+}
+
+.event-detail__result-value small {
+  font-size: 0.8rem;
+  color: var(--secondary-color);
+}
+
+.event-detail__notes {
+  font-size: 0.95rem;
+  line-height: 1.75;
+  color: var(--primary-color);
+  margin-bottom: var(--space-6);
+}
+
+.event-detail__links {
+  display: flex;
+  gap: var(--space-5);
+  flex-wrap: wrap;
+  margin-top: var(--space-4);
+}
+
+.event-detail__link {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--theme-color);
+}
+
+/* ========== responsive ========== */
+
+@media (max-width: 960px) {
+  .races__feed {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 700px) {
+  .races__feed {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 460px) {
+  .races__feed {
     grid-template-columns: 1fr;
   }
+}
 
-  .race-card__media {
-    min-height: 110px;
+@media (max-width: 600px) {
+  .event-detail__carousel-btn {
+    width: 32px;
+    height: 32px;
+    font-size: 1.2rem;
+  }
+
+  .event-detail__result-row {
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .event-detail__result-label {
+    min-width: 0;
   }
 }
