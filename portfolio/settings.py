@@ -23,6 +23,7 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
+    'django.contrib.postgres',
     'django.contrib.staticfiles',
 
     # 3rd party apps
@@ -35,6 +36,7 @@ INSTALLED_APPS = [
     'portfolio.apps.pages',
     'portfolio.apps.events',
     'portfolio.apps.blogs',
+    'portfolio.apps.projects',
 ]
 
 MIDDLEWARE = [

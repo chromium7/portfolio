@@ -26,58 +26,29 @@
   <div class="page projects">
     <h1 class="page-heading">Projects</h1>
 
-    <div class="projects__wrapper projects__wrapper--left">
-      <picture>
-        <source srcset="{% static 'images/kiosk-1.webp' %}" type="image/webp">
-        <source srcset="{% static 'images/kiosk-1.png' %}" type="image/png">
-        <img src="{% static 'images/kiosk-1.png' %}" alt="Self Ordering Kiosk" class="projects__img">
-      </picture>
+    {% for project in projects %}
+    <div class="projects__wrapper {% cycle 'projects__wrapper--left' 'projects__wrapper--right' %}">
+      {% if project.image %}
+      <img src="{{ project.image.url }}" alt="{{ project.title }}" class="projects__img">
+      {% endif %}
       <div class="projects__content">
-        <h3 class="page-subheading">Fullstack Engineer</h3>
-        <h2>Self Ordering Kiosk</h2>
+        <h3 class="page-subheading">{{ project.role }}</h3>
+        <h2>{{ project.title }}</h2>
+        {% if project.tech_stack %}
         <ul class="projects__stack">
-          <li class="projects__stack-item">Django</li>
-          <li class="projects__stack-item">Docker</li>
-          <li class="projects__stack-item">IOT</li>
-          <li class="projects__stack-item">CSS</li>
-          <li class="projects__stack-item">JavaScript</li>
-          <li class="projects__stack-item">Kotlin</li>
-          <li class="projects__stack-item">Compose</li>
+          {% for tech in project.tech_stack %}
+          <li class="projects__stack-item">{{ tech }}</li>
+          {% endfor %}
         </ul>
-        <p>
-          A maintainable and reusable self service kiosk system,
-          which has been deployed in more than 1000 devices (and counting).
-          Each kiosk system can be accessed remotely and can be easily updated
-          by admin in a centralized dashboard.
-        </p>
-      </div>
-    </div>
-
-    <div class="projects__wrapper projects__wrapper--right">
-      <picture>
-        <source srcset="{% static 'images/onebunda.webp' %}" type="image/webp">
-        <source srcset="{% static 'images/onebunda.png' %}" type="image/png">
-        <img src="{% static 'images/onebunda.png' %}" alt="OneBunda" class="projects__img">
-      </picture>
-      <div class="projects__content">
-        <h3 class="page-subheading">Lead Engineer</h3>
-        <h2>OneBunda</h2>
-        <ul class="projects__stack">
-          <li class="projects__stack-item">Django</li>
-          <li class="projects__stack-item">PostgreSQL</li>
-          <li class="projects__stack-item">Redis</li>
-          <li class="projects__stack-item">CSS</li>
-          <li class="projects__stack-item">JavaScript</li>
-        </ul>
-        <p>
-          A progressive web app online reservation system that allows user to create offline or online appointment with
-          their desired doctor. Integrated with external services such for payment, WhatsApp notifications,
-          membership management, and more.
-        </p>
+        {% endif %}
+        <p>{{ project.description }}</p>
+        {% if project.project_url %}
         <br>
-        <a href="https://onebunda.com" class="link--static" target="_blank" rel="noopener">View Site</a>
+        <a href="{{ project.project_url }}" class="link--static" target="_blank" rel="noopener">View Site</a>
+        {% endif %}
       </div>
     </div>
+    {% endfor %}
 
     <div class="projects__more">
       <a href="{% url 'pages:projects' %}" class="link--clear">... and more over here!</a>

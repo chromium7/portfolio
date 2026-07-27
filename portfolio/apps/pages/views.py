@@ -4,10 +4,16 @@ from django.db.models import QuerySet
 from django.views.generic import DetailView, ListView, TemplateView
 
 from portfolio.apps.events.models import Event
+from portfolio.apps.projects.models import Project
 
 
 class HomeView(TemplateView):
     template_name = "pages/home.html"
+
+    def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
+        context = super().get_context_data(**kwargs)
+        context["projects"] = Project.objects.filter(is_visible=True).order_by("position", "-created_at")
+        return context
 
 
 class AboutView(TemplateView):
@@ -16,6 +22,11 @@ class AboutView(TemplateView):
 
 class ProjectsView(TemplateView):
     template_name = "pages/projects.html"
+
+    def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
+        context = super().get_context_data(**kwargs)
+        context["projects"] = Project.objects.filter(is_visible=True).order_by("position", "-created_at")
+        return context
 
 
 class ToolsView(TemplateView):
