@@ -21,8 +21,8 @@
             {% endfor %}
           </div>
           {% if photos|length > 1 %}
-            <button type="button" class="event-detail__carousel-btn event-detail__carousel-btn--prev" aria-label="Previous photo">‹</button>
-            <button type="button" class="event-detail__carousel-btn event-detail__carousel-btn--next" aria-label="Next photo">›</button>
+            <button type="button" class="event-detail__carousel-btn event-detail__carousel-btn--prev" aria-label="Previous photo"></button>
+            <button type="button" class="event-detail__carousel-btn event-detail__carousel-btn--next" aria-label="Next photo"></button>
             <div class="event-detail__carousel-dots">
               {% for photo in photos %}
                 <button type="button" class="event-detail__carousel-dot{% if forloop.first %} event-detail__carousel-dot--active{% endif %}" data-index="{{ forloop.counter0 }}" aria-label="Go to photo {{ forloop.counter }}"></button>
