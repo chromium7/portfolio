@@ -21,13 +21,6 @@ class Project(models.Model):
         default=list,
         help_text=_("List of technologies used"),
     )
-    image = models.ImageField(
-        _("image"),
-        upload_to=FilenameGenerator("projects"),
-        blank=True,
-        null=True,
-        help_text=_("Project screenshot or thumbnail"),
-    )
     position = models.PositiveIntegerField(_("position"), default=0, db_index=True)
     is_visible = models.BooleanField(_("visible"), default=True, db_index=True)
     created_at = models.DateTimeField(_("created at"), auto_now_add=True)
@@ -45,3 +38,19 @@ class Project(models.Model):
         if not self.slug:
             self.slug = slugify(self.title)
         super().save(*args, **kwargs)
+
+
+class ProjectImage(models.Model):
+    project = models.ForeignKey(Project, on_delete=models.CASCADE, related_name="images")
+    image = models.ImageField(_("image"), upload_to=FilenameGenerator("projects"))
+    caption = models.CharField(_("caption"), max_length=200, blank=True)
+    position = models.PositiveIntegerField(_("position"), default=0, db_index=True)
+    uploaded_at = models.DateTimeField(_("uploaded at"), auto_now_add=True)
+
+    class Meta:
+        verbose_name = _("project image")
+        verbose_name_plural = _("project images")
+        ordering = ("position", "uploaded_at")
+
+    def __str__(self) -> str:
+        return f"Image for {self.project.title}"

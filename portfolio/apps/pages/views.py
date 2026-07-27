@@ -12,7 +12,11 @@ class HomeView(TemplateView):
 
     def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
         context = super().get_context_data(**kwargs)
-        context["projects"] = Project.objects.filter(is_visible=True).order_by("position", "-created_at")
+        context["projects"] = (
+            Project.objects.filter(is_visible=True)
+            .prefetch_related("images")
+            .order_by("position", "-created_at")
+        )
         return context
 
 
@@ -25,7 +29,11 @@ class ProjectsView(TemplateView):
 
     def get_context_data(self, **kwargs: Any) -> dict[str, Any]:
         context = super().get_context_data(**kwargs)
-        context["projects"] = Project.objects.filter(is_visible=True).order_by("position", "-created_at")
+        context["projects"] = (
+            Project.objects.filter(is_visible=True)
+            .prefetch_related("images")
+            .order_by("position", "-created_at")
+        )
         return context
 
 
