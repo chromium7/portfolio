@@ -10,47 +10,28 @@
     <h1 class="page-heading page-heading--left">Projects</h1>
 
     <div class="project-cards">
+      {% for project in projects %}
       <div class="project-card">
-        <picture>
-          <source srcset="{% static 'images/kiosk-1.webp' %}" type="image/webp">
-          <source srcset="{% static 'images/kiosk-1.png' %}" type="image/png">
-          <img src="{% static 'images/kiosk-1.png' %}" alt="Self Ordering Kiosk" class="project-card__media">
-        </picture>
-        <h3 class="page-subheading project-card__role">Fullstack Engineer</h3>
-        <h2 class="project-card__title">Self Ordering Kiosk</h2>
+        {% with project.images.first as image %}
+        {% if image %}
+        <img src="{{ image.image.url }}" alt="{{ image.caption|default:project.title }}" class="project-card__media">
+        {% endif %}
+        {% endwith %}
+        <h3 class="page-subheading project-card__role">{{ project.role }}</h3>
+        <h2 class="project-card__title">{{ project.title }}</h2>
+        {% if project.tech_stack %}
         <ul class="project-card__stack">
-          <li class="tag">Django</li>
-          <li class="tag">Docker</li>
-          <li class="tag">IOT</li>
-          <li class="tag">Kotlin</li>
-          <li class="tag">Compose</li>
+          {% for tech in project.tech_stack %}
+          <li class="tag">{{ tech }}</li>
+          {% endfor %}
         </ul>
-        <p class="project-card__desc">
-          Reusable self service kiosk system deployed on more than 1000 devices (and counting),
-          accessed remotely and updated by admins from a centralized dashboard.
-        </p>
+        {% endif %}
+        <p class="project-card__desc">{{ project.description }}</p>
+        {% if project.project_url %}
+        <a href="{{ project.project_url }}" class="link--static project-card__link" target="_blank" rel="noopener">View Site</a>
+        {% endif %}
       </div>
-
-      <div class="project-card">
-        <picture>
-          <source srcset="{% static 'images/onebunda.webp' %}" type="image/webp">
-          <source srcset="{% static 'images/onebunda.png' %}" type="image/png">
-          <img src="{% static 'images/onebunda.png' %}" alt="OneBunda" class="project-card__media">
-        </picture>
-        <h3 class="page-subheading project-card__role">Lead Engineer</h3>
-        <h2 class="project-card__title">OneBunda</h2>
-        <ul class="project-card__stack">
-          <li class="tag">Django</li>
-          <li class="tag">PostgreSQL</li>
-          <li class="tag">Redis</li>
-          <li class="tag">JavaScript</li>
-        </ul>
-        <p class="project-card__desc">
-          Progressive web app reservation system with payments, WhatsApp notifications and
-          membership management.
-        </p>
-        <a href="https://onebunda.com" class="link--static project-card__link" target="_blank" rel="noopener">View Site</a>
-      </div>
+      {% endfor %}
     </div>
   </div>
 </section>
