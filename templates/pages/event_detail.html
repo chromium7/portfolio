@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load event_extras %}
 
 {% block title %}{{ event.name }} – Christofer Saputra{% endblock %}
 
@@ -54,7 +55,7 @@
         {% if event.finish_time %}
           <div class="event-detail__result-row">
             <span class="event-detail__result-label">Finish Time</span>
-            <span class="event-detail__result-value">{{ event.finish_time }}{% if event.pace_per_km %} <small>({{ event.pace_per_km }} /km)</small>{% endif %}</span>
+            <span class="event-detail__result-value">{{ event.finish_time }}{% if event.pace_per_km %} <small>({{ event.pace_per_km|pace }} /km)</small>{% endif %}</span>
           </div>
         {% endif %}
         {% if event.score %}

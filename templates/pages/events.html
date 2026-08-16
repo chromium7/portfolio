@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load event_extras %}
 
 {% block title %}Events – Christofer Saputra{% endblock %}
 
@@ -10,9 +11,9 @@
     <h1 class="page-heading page-heading--left">Events</h1>
 
     <div class="races__filters" role="group" aria-label="Filter events by type">
-      <button type="button" class="race-filter race-filter--active" data-filter="all">All</button>
+      <a href="{% url 'pages:events' %}" class="race-filter{% if not selected_category %} race-filter--active{% endif %}">All</a>
       {% for category in categories %}
-        <button type="button" class="race-filter" data-filter="{{ category }}">{{ category }}</button>
+        <a href="?category={{ category.slug }}" class="race-filter{% if selected_category == category.slug %} race-filter--active{% endif %}">{{ category.name }}</a>
       {% endfor %}
     </div>
 
@@ -23,8 +24,6 @@
             {% with cover=event.photos.first %}
               {% if cover %}
                 <img src="{{ cover.image.url }}" alt="{{ cover.caption|default:event.name }}">
-              {% else %}
-                medal photo
               {% endif %}
             {% endwith %}
           </div>
@@ -42,7 +41,7 @@
             {% endif %}
             <div class="race-card__stats">
               {% if event.finish_time %}
-                <span class="race-card__result"><b>{{ event.finish_time }}</b>{% if event.pace_per_km %} · {{ event.pace_per_km }} /km{% endif %}</span>
+                <span class="race-card__result"><b>{{ event.finish_time }}</b>{% if event.pace_per_km %} · {{ event.pace_per_km|pace }} /km{% endif %}</span>
               {% elif event.score %}
                 <span class="race-card__result"><b>{{ event.score }}</b></span>
               {% elif event.overall_position %}
@@ -59,30 +58,14 @@
     {% if is_paginated %}
       <nav class="races__pagination" aria-label="Event pages">
         {% if page_obj.has_previous %}
-          <a href="?page={{ page_obj.previous_page_number }}" class="race-filter">Prev</a>
+          <a href="?page={{ page_obj.previous_page_number }}{% if selected_category %}&amp;category={{ selected_category }}{% endif %}" class="race-filter">Prev</a>
         {% endif %}
         <span class="races__pagination-current">Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</span>
         {% if page_obj.has_next %}
-          <a href="?page={{ page_obj.next_page_number }}" class="race-filter">Next</a>
+          <a href="?page={{ page_obj.next_page_number }}{% if selected_category %}&amp;category={{ selected_category }}{% endif %}" class="race-filter">Next</a>
         {% endif %}
       </nav>
     {% endif %}
   </div>
 </section>
-{% endblock %}
-
-{% block extra_js %}
-<script>
-  document.querySelectorAll('.race-filter').forEach(function (button) {
-    button.addEventListener('click', function () {
-      document.querySelectorAll('.race-filter').forEach(function (other) {
-        other.classList.toggle('race-filter--active', other === button);
-      });
-      var filter = button.dataset.filter;
-      document.querySelectorAll('.race-card').forEach(function (card) {
-        card.classList.toggle('is-hidden', filter !== 'all' && card.dataset.type !== filter);
-      });
-    });
-  });
-</script>
 {% endblock %}
