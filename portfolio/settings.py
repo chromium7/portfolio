@@ -11,7 +11,7 @@ SETTINGS_DIR = Path(__file__).resolve().parent
 SECRET_KEY = 'django-insecure-$_oa*lwe!5#65i0p5b(2ayk#kjh!*as1(72bq_nv909z76-+c)'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = []
 
