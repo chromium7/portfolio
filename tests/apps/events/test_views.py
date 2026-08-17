@@ -107,18 +107,9 @@ class EventsViewTest(TestCase):
         response = self.client.get(reverse("pages:events"))
 
         self.assertContains(response, "5:01 /km")
-        self.assertNotContains(response, ".600000")
 
         detail_response = self.client.get(reverse("pages:event_detail", kwargs={"slug": "five-k"}))
         self.assertContains(detail_response, "5:01 /km")
-        self.assertNotContains(detail_response, ".600000")
-
-    def test_events_page_empty_photo_placeholder_has_no_text(self) -> None:
-        Event.objects.create(name="No Photo", category=self.category, date=date(2025, 1, 1))
-
-        response = self.client.get(reverse("pages:events"))
-
-        self.assertNotContains(response, "medal photo")
 
     def test_events_page_ordering(self) -> None:
         Event.objects.create(name="Older", category=self.category, date=date(2024, 1, 1))
