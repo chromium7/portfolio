@@ -1,4 +1,4 @@
-from datetime import date
+from datetime import date, timedelta
 
 from django.test import TestCase
 from django.urls import reverse
@@ -39,8 +39,20 @@ class EventsViewTest(TestCase):
         Event.objects.create(name="Ultra Run", category=cat_ultra, date=date(2025, 6, 1))
         Event.objects.create(name="Marathon", category=self.category, date=date(2025, 10, 26))
         response = self.client.get(reverse("pages:events"))
-        self.assertContains(response, 'data-filter="Marathon"')
-        self.assertContains(response, 'data-filter="Ultra"')
+        self.assertContains(response, '?category=marathon')
+        self.assertContains(response, '?category=ultra')
+        self.assertContains(response, '?category=marathon', count=1)
+        self.assertContains(response, '?category=ultra', count=1)
+
+    def test_events_page_category_filters_events(self) -> None:
+        cat_ultra = EventCategory.objects.create(name="Ultra", group=EventCategory.Group.RUNNING)
+        Event.objects.create(name="Ultra Run", category=cat_ultra, date=date(2025, 6, 1))
+        Event.objects.create(name="Marathon", category=self.category, date=date(2025, 10, 26))
+
+        response = self.client.get(reverse("pages:events") + "?category=ultra")
+
+        self.assertContains(response, "Ultra Run")
+        self.assertNotContains(response, ">Marathon</h3>")
 
     def test_event_detail_page_with_urls(self) -> None:
         event = Event.objects.create(
@@ -57,11 +69,11 @@ class EventsViewTest(TestCase):
         self.assertContains(response, "Official Results ↗")
 
     def test_events_page_pagination(self) -> None:
-        for i in range(7):
+        for i in range(17):
             Event.objects.create(
                 name=f"Event {i}",
                 category=self.category,
-                date=date(2025, 1, i + 1),
+                date=date(2025, 1, (i % 28) + 1),
             )
         response = self.client.get(reverse("pages:events"))
         self.assertContains(response, "Page 1 of 2")
@@ -73,15 +85,31 @@ class EventsViewTest(TestCase):
 
     def test_events_page_categories_unaffected_by_pagination(self) -> None:
         cat_ultra = EventCategory.objects.create(name="Ultra", group=EventCategory.Group.RUNNING)
-        for i in range(10):
+        for i in range(20):
             Event.objects.create(
                 name=f"Event {i}",
                 category=self.category if i < 5 else cat_ultra,
-                date=date(2025, 1, i + 1),
+                date=date(2025, 1, (i % 28) + 1),
             )
         response = self.client.get(reverse("pages:events") + "?page=2")
-        self.assertContains(response, 'data-filter="Marathon"')
-        self.assertContains(response, 'data-filter="Ultra"')
+        self.assertContains(response, '?category=marathon')
+        self.assertContains(response, '?category=ultra')
+
+    def test_events_page_formats_pace_without_fractional_seconds(self) -> None:
+        Event.objects.create(
+            name="Five K",
+            category=self.category,
+            date=date(2025, 1, 1),
+            distance_km=5,
+            finish_time=timedelta(minutes=25, seconds=3),
+        )
+
+        response = self.client.get(reverse("pages:events"))
+
+        self.assertContains(response, "5:01 /km")
+
+        detail_response = self.client.get(reverse("pages:event_detail", kwargs={"slug": "five-k"}))
+        self.assertContains(detail_response, "5:01 /km")
 
     def test_events_page_ordering(self) -> None:
         Event.objects.create(name="Older", category=self.category, date=date(2024, 1, 1))
