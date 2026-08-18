@@ -1,9 +1,9 @@
 <header class="app-header">
   <div class="app-header__container">
-    <a href="{% url 'pages:home' %}">
+    <a href="{% url 'pages:home' %}" class="app-header__brand">
       <h1 class="app-header__title">Christofer Saputra</h1>
     </a>
-    <nav class="app-header__buttons">
+    <nav class="app-header__buttons" aria-label="Primary navigation">
       <a href="{% url 'pages:projects' %}" class="app-header__link{% if request.resolver_match.view_name == 'pages:projects' %} app-header__link--active{% endif %}">Projects</a>
       <a href="{% url 'blogs:list' %}" class="app-header__link{% if request.resolver_match.namespace == 'blogs' %} app-header__link--active{% endif %}">Blog</a>
       <a href="{% url 'pages:tools' %}" class="app-header__link{% if request.resolver_match.view_name == 'pages:tools' %} app-header__link--active{% endif %}">Tools</a>
@@ -15,5 +15,34 @@
         <span class="theme-toggle__icon theme-toggle__icon--moon"></span>
       </label>
     </nav>
+    <button class="app-header__menu-button" type="button" aria-expanded="false" aria-controls="mobile-navigation" aria-label="Open navigation menu">
+      <span class="app-header__menu-line"></span>
+      <span class="app-header__menu-line"></span>
+      <span class="app-header__menu-line"></span>
+    </button>
+  </div>
+  <div class="mobile-nav" id="mobile-navigation" aria-hidden="true">
+    <button class="mobile-nav__backdrop" type="button" aria-label="Close navigation menu"></button>
+    <aside class="mobile-nav__panel" aria-label="Mobile navigation">
+      <div class="mobile-nav__header">
+        <span class="mobile-nav__label">Menu</span>
+        <button class="mobile-nav__close" type="button" aria-label="Close navigation menu">×</button>
+      </div>
+      <nav class="mobile-nav__links" aria-label="Mobile primary navigation">
+        <a href="{% url 'pages:projects' %}" class="mobile-nav__link{% if request.resolver_match.view_name == 'pages:projects' %} mobile-nav__link--active{% endif %}">Projects</a>
+        <a href="{% url 'blogs:list' %}" class="mobile-nav__link{% if request.resolver_match.namespace == 'blogs' %} mobile-nav__link--active{% endif %}">Blog</a>
+        <a href="{% url 'pages:tools' %}" class="mobile-nav__link{% if request.resolver_match.view_name == 'pages:tools' %} mobile-nav__link--active{% endif %}">Tools</a>
+        <a href="{% url 'pages:about' %}" class="mobile-nav__link{% if request.resolver_match.view_name == 'pages:about' %} mobile-nav__link--active{% endif %}">About</a>
+      </nav>
+      <div class="mobile-nav__theme">
+        <span>Theme</span>
+        <label class="theme-toggle">
+          <input type="checkbox" class="theme-toggle__input" aria-label="Toggle dark mode">
+          <span class="theme-toggle__handle"></span>
+          <span class="theme-toggle__icon theme-toggle__icon--sun"></span>
+          <span class="theme-toggle__icon theme-toggle__icon--moon"></span>
+        </label>
+      </div>
+    </aside>
   </div>
 </header>

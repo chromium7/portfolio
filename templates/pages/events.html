@@ -31,10 +31,8 @@
             <div class="race-card__meta">
               <span class="race-card__badge{% if event.category.group == 'cycling' %} race-card__badge--cycling{% endif %}">{{ event.category.name }}</span>
               <span class="race-card__date">{{ event.date|date:"M Y" }}</span>
-              {% if event.location %}
-                <span class="race-card__loc">{{ event.location }}</span>
-              {% endif %}
             </div>
+            <span class="race-card__loc">{{ event.location|default:" " }}</span>
             <h3 class="race-card__title">{{ event.name }}</h3>
             {% if event.notes %}
               <p class="race-card__desc">{{ event.notes|truncatechars:100 }}</p>

@@ -14,13 +14,18 @@
 
 .races__filters {
   display: flex;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   gap: 10px;
   margin: 2rem 0 2.75rem;
+  padding-bottom: var(--space-2);
+  overflow-x: auto;
+  overscroll-behavior-inline: contain;
+  scrollbar-width: thin;
 }
 
 .race-filter {
   display: inline-block;
+  flex: 0 0 auto;
   font-family: var(--font-mono);
   font-size: 0.8rem;
   letter-spacing: 1px;
@@ -103,7 +108,7 @@
 .race-card__meta {
   display: flex;
   align-items: center;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   gap: var(--space-4);
   margin-bottom: var(--space-3);
 }
@@ -117,6 +122,9 @@
   border-radius: var(--radius-pill);
   background: rgba(76, 92, 106, 0.14);
   color: var(--theme-color);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .race-card__badge--cycling {
@@ -140,18 +148,26 @@
 }
 
 .race-card__loc {
+  display: block;
   font-size: 0.8rem;
   color: var(--secondary-color);
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
   min-width: 0;
+  min-height: 1.2em;
+  margin-bottom: var(--space-2);
 }
 
 .race-card__title {
   font-size: 1.15rem;
   letter-spacing: -0.3px;
   margin-bottom: var(--space-2);
+  min-height: 2.5em;
+  display: -webkit-box;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
 }
 
 .race-card__desc {
@@ -447,6 +463,11 @@
 }
 
 @media (max-width: 600px) {
+  .races__filters {
+    margin-right: -5vw;
+    padding-right: 5vw;
+  }
+
   .event-detail__carousel-btn {
     width: 32px;
     height: 32px;
